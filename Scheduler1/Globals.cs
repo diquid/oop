@@ -2,7 +2,7 @@
 
 namespace Scheduler1
 {
-    public static class Palette
+    public static class Globals
     {
         //
         // https://www.webfx.com/web-design/hex-to-rgb/
@@ -19,5 +19,11 @@ namespace Scheduler1
 
         public static readonly Color MenuElement =
             Color.FromArgb(104, 109, 224);
+        
+        public static readonly Font HeaderBarFont = 
+            new Font("Gotham Pro Medium", 20);
+        
+        public static readonly int MainSize = 50;
+        
     }
 }
