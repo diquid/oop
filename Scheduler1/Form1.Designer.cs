@@ -33,38 +33,26 @@ namespace Scheduler1
         {
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // label1
             // 
+            this.label1.BackColor = System.Drawing.Color.Blue;
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Font = new System.Drawing.Font("Gotham Pro Medium", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1100, 44);
+            this.label1.Size = new System.Drawing.Size(1100, 72);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button1
             // 
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(731, 44);
+            this.button1.Location = new System.Drawing.Point(155, 210);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(369, 663);
+            this.button1.Size = new System.Drawing.Size(105, 106);
             this.button1.TabIndex = 1;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(124, 116);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(159, 144);
-            this.panel1.TabIndex = 2;
             // 
             // Form1
             // 
@@ -73,15 +61,12 @@ namespace Scheduler1
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (223)))), ((int) (((byte) (249)))), ((int) (((byte) (251)))));
             this.ClientSize = new System.Drawing.Size(1100, 707);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
         }
-
-        private System.Windows.Forms.Panel panel1;
 
         private System.Windows.Forms.Button button1;
 

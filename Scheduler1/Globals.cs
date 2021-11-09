@@ -24,6 +24,8 @@ namespace Scheduler1
             new Font("Gotham Pro Medium", 20);
         
         public static readonly int MainSize = 50;
+        public static readonly int FormWidth = 1000;
+        public static readonly int FormHeight = 600;
         
     }
 }
