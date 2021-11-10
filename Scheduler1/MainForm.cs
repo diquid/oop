@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using ContentAlignment = System.Drawing.ContentAlignment;
 
@@ -12,8 +10,6 @@ namespace Scheduler1
     {
         private Panel mainPanel;
         private Panel settingsPanel;
-        private readonly Dictionary<Subject, Panel> subjectsPanels = 
-            new Dictionary<Subject, Panel>();
         private readonly Stack<Panel> panelsStack = new Stack<Panel>();
 
         public MainForm()
@@ -23,6 +19,64 @@ namespace Scheduler1
             CreateMainPanel(subjects);
             CreateSubjectsPanels(subjects);
             CreateSettingsPanel();
+        }
+
+        private void InitializeForm()
+        {
+            ClientSize = new Size(900, 600);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Text = @"Study Structurizer";
+            BackColor = Globals.FormBackground;
+        }
+
+        private void CreateMainPanel(List<Subject> subjects)
+        {
+            var headerSettings = new Button
+            {
+                Size = new Size(Globals.MainSize, Globals.MainSize),
+                Location = new Point(ClientSize.Width - Globals.MainSize, 0),
+                FlatStyle = FlatStyle.Flat,
+                BackgroundImage = Image.FromFile(Files.GetPathTo(@"Icons\1.png")),
+                BackgroundImageLayout = ImageLayout.Stretch,
+                BackColor = Globals.MenuElement,
+                FlatAppearance =
+                {
+                    BorderSize = 0
+                }
+            };
+            var headerText = new Label
+            {
+                Dock = DockStyle.Top,
+                BackColor = Globals.MenuElement,
+                Size = new Size(ClientSize.Width, Globals.MainSize),
+                Font = Globals.HeaderBarFont,
+                ForeColor = Globals.FontLight,
+                Text = @"Study Structurizer",
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(Globals.MainSize, 0, 0, 0)
+            };
+            var tableLayoutPanel = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                VerticalScroll = {Maximum = 0},
+                AutoScroll = true,
+            };
+            var panel = new Panel {Dock = DockStyle.Fill};
+
+            var buttons = GetButtons(subjects);
+            foreach (var b in buttons)
+                tableLayoutPanel.Controls.Add(b);
+
+            panel.Controls.Add(tableLayoutPanel);
+            panel.Controls.Add(headerSettings);
+            panel.Controls.Add(headerText);
+            Controls.Add(panel);
+
+            mainPanel = panel;
+
+            headerSettings.Click += (sender, eventArgs) =>
+                OpenPanelClicked(settingsPanel,
+                    panel);
         }
 
         private void CreateSubjectsPanels(List<Subject> subjects)
@@ -66,15 +120,9 @@ namespace Scheduler1
                     TextAlign = ContentAlignment.MiddleLeft,
                     Padding = new Padding(Globals.MainSize, 0, 0, 0)
                 };
-                var flowLayoutPanel1 = new TableLayoutPanel
-                {
-                    Dock = DockStyle.Fill,
-                    AutoScroll = true
-                };
-                var panel = new Panel
-                {
-                    Dock = DockStyle.Fill
-                };
+                var flowLayoutPanel1 = new TableLayoutPanel 
+                    {Dock = DockStyle.Fill,AutoScroll = true};
+                var panel = new Panel {Dock = DockStyle.Fill};
 
                 panel.Controls.Add(flowLayoutPanel1);
                 panel.Controls.Add(headerSettings);
@@ -82,13 +130,12 @@ namespace Scheduler1
                 panel.Controls.Add(headerText);
                 Controls.Add(panel);
 
-                subjectsPanels.Add(subject, panel);
-                
-                headerBack.Click += OpenPreviousPanelClicked;
-                headerSettings.Click += (sender, eventArgs) => 
-                    OpenPanelClicked(sender, eventArgs, settingsPanel,
-                        panel);
+                subject.Panel = panel;
 
+                headerBack.Click += OpenPreviousPanelClicked;
+                headerSettings.Click += (sender, eventArgs) =>
+                    OpenPanelClicked(settingsPanel,
+                        panel);
             }
         }
 
@@ -118,15 +165,9 @@ namespace Scheduler1
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = new Padding(Globals.MainSize, 0, 0, 0)
             };
-            var flowLayoutPanel1 = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                AutoScroll = true
-            };
-            var panel = new Panel
-            {
-                Dock = DockStyle.Fill
-            };
+            var flowLayoutPanel1 = new TableLayoutPanel 
+                {Dock = DockStyle.Fill, AutoScroll = true};
+            var panel = new Panel {Dock = DockStyle.Fill};
 
             panel.Controls.Add(flowLayoutPanel1);
             panel.Controls.Add(headerBack);
@@ -137,68 +178,13 @@ namespace Scheduler1
             headerBack.Click += OpenPreviousPanelClicked;
         }
 
-        private void OpenPreviousPanelClicked(object sender, EventArgs e)
-        {
+        private void OpenPreviousPanelClicked(object sender, EventArgs e) =>
             panelsStack.Pop().BringToFront();
-        }
-        
-        private void OpenPanelClicked(object sender, EventArgs e, Panel panelToOpen,
-            Panel previousPanel)
+
+        private void OpenPanelClicked(Panel panelToOpen, Panel previousPanel)
         {
             panelToOpen.BringToFront();
             panelsStack.Push(previousPanel);
-        }
-
-        private void CreateMainPanel(List<Subject> subjects)
-        {
-            var headerSettings = new Button
-            {
-                Size = new Size(Globals.MainSize, Globals.MainSize),
-                Location = new Point(ClientSize.Width - Globals.MainSize, 0),
-                FlatStyle = FlatStyle.Flat,
-                BackgroundImage = Image.FromFile(Files.GetPathTo(@"Icons\1.png")),
-                BackgroundImageLayout = ImageLayout.Stretch,
-                BackColor = Globals.MenuElement,
-                FlatAppearance =
-                {
-                    BorderSize = 0
-                }
-            };
-            var headerText = new Label
-            {
-                Dock = DockStyle.Top,
-                BackColor = Globals.MenuElement,
-                Size = new Size(ClientSize.Width, Globals.MainSize),
-                Font = Globals.HeaderBarFont,
-                ForeColor = Globals.FontLight,
-                Text = @"Study Structurizer",
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(Globals.MainSize, 0, 0, 0)
-            };
-            var flowLayoutPanel1 = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-            };
-            flowLayoutPanel1.VerticalScroll.Maximum = 0;
-            flowLayoutPanel1.AutoScroll = true;
-            var panel = new Panel
-            {
-                Dock = DockStyle.Fill
-            };
-            
-            var buttons = GetButtons(subjects);
-            foreach (var b in buttons)
-                flowLayoutPanel1.Controls.Add(b);
-
-            panel.Controls.Add(flowLayoutPanel1);
-            panel.Controls.Add(headerSettings);
-            panel.Controls.Add(headerText);
-            Controls.Add(panel);
-
-            mainPanel = panel;
-
-            headerSettings.Click += (sender, eventArgs) => 
-                OpenPanelClicked(sender, eventArgs, settingsPanel, mainPanel);
         }
 
         private static List<Subject> GetSubjects()
@@ -209,7 +195,8 @@ namespace Scheduler1
             {
                 var random = rnd.Next(2);
                 var colors = new[] {Globals.Button1, Globals.Button2};
-                subjects.Add(new Subject("Алгебра и геометрия", @"Icons\4.png",
+                subjects.Add(new Subject("Алгебра и геометрия",
+                    new Panel(), @"Icons\4.png",
                     colors[random], new List<Task>
                     {
                         new Task(DateTime.Now, false, "Task1"),
@@ -220,6 +207,7 @@ namespace Scheduler1
                         new Document(@"Icons\1.png", "DocumentTestFile.txt", "Doc2")
                     }));
             }
+
             return subjects;
         }
 
@@ -240,25 +228,12 @@ namespace Scheduler1
                     Margin = new Padding(0, 15, 0, 15),
                     FlatAppearance = {BorderSize = 0}
                 };
-                button.Click += (sender, eventArgs) => 
-                    OpenSubjectPanel(sender, eventArgs, subject);
+                button.Click += (sender, eventArgs) =>
+                    OpenPanelClicked(subject.Panel, mainPanel);
                 buttons.Add(button);
             }
+
             return buttons;
-        }
-
-        private void OpenSubjectPanel(object sender, EventArgs e, Subject subject)
-        {
-            subjectsPanels[subject].BringToFront();
-            panelsStack.Push(mainPanel);
-        }
-
-        private void InitializeForm()
-        {
-            ClientSize = new Size(900, 600);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Text = @"Study Structurizer";
-            BackColor = Globals.FormBackground;
         }
     }
 }

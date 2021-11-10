@@ -10,9 +10,9 @@ namespace Scheduler1
         public string Type;
         public string Text;
 
-        public Document(string icon, string path, string text)
+        public Document(string iconPath, string path, string text)
         {
-            Icon = Image.FromFile(Files.GetPathTo(icon));
+            Icon = Image.FromFile(Files.GetPathTo(iconPath));
             Path = path;
             Type = path[path.LastIndexOf('.')..];
             Text = text;
