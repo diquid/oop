@@ -17,24 +17,24 @@
 
 # Подробное описание идеи (по разделам приложения и скриншотам концептов)  
 
-![главный экран](https://keep.google.com/u/0/media/v2/1JcUKP7W7qmUClr8_kDtqGgnczcHybCKKQTfSog44iWlJx0_--sCOg-jY9qDynI0/1jFXAT4IIGF_xdFkZEolhrFk7ffXzDB3ZjLYsMYdSD6cju8ejyRKbkNPBe4GWog?sz=512&accept=image%2Fgif%2Cimage%2Fjpeg%2Cimage%2Fjpg%2Cimage%2Fpng%2Cimage%2Fwebp)  
+![pic1](https://user-images.githubusercontent.com/72702419/141100957-12c3d03d-92c5-43d1-afa3-790d9d767675.png)
 
 Главный экран состоит из выбора вкладок [1], выбора предмета в конкретной вкладке [2], редактирования предметов в конкретной вкладке [3]. Также в шапке приложения всегда есть кнопка перехода в Настройки [4].  
 
-![настройки](https://keep.google.com/u/0/media/v2/1QWzS2UKknJ9-PfBquvFzqrfgMMSauiO--KCqD74U739Z_Hh0KyyJV5IKX6Mzqg4/1U90iAQJqzFbin4rYtDSd7z9slKL-Sz5OUam1rMmzBnKcvJl47erXTIXBm9Xl?sz=512&accept=image%2Fgif%2Cimage%2Fjpeg%2Cimage%2Fjpg%2Cimage%2Fpng%2Cimage%2Fwebp)  
+![pic2](https://user-images.githubusercontent.com/72702419/141101030-909d534f-3a9a-4b0e-b685-f9fef2bf3dfa.png)
 
 Настройки состоит из раздела с редактированием вкладок на главном экране [1], а также из дополнительных опций в виде чекбоксов [2].  
 
-![выбор предмета](https://keep.google.com/u/0/media/v2/1o5EzvijXCKSKYvqX1RmVbyD6j-y5XWl9lSki7r8_FpaUnYY6XfE2MTDwD_PVHQ/1QIft9YW3RNR_Ft09-XDD5aako_pJL5I5LT1dDOu8nFpYfgMW1HtEjttRMClgCw?sz=512&accept=image%2Fgif%2Cimage%2Fjpeg%2Cimage%2Fjpg%2Cimage%2Fpng%2Cimage%2Fwebp)  
+![pic3](https://user-images.githubusercontent.com/72702419/141101078-8f799d9b-be50-4e0a-b1f1-1b18ac6976b5.png)
 
 При выборе предмета пользователь попадает на страницу предмета.
 Страница предмета состоит из двух больших разделов: «Доска задач» [1] и «Проводник» [2]. Рассмотрим каждый раздел отдельно.  
 
-![доска задач](https://keep.google.com/u/0/media/v2/1U8HhnDgLKsYSRa_sSet8PqUlA9HkWDE9mS8kFIyIZV_dcYyO0MmGm9G_oZrvzQ/1f0mYgeizpNMzRGI-b3M2-u8e4cmgNLF8Sc4GM6cCCZsMOQBqT37SRl9kevcnzyk?sz=512&accept=image%2Fgif%2Cimage%2Fjpeg%2Cimage%2Fjpg%2Cimage%2Fpng%2Cimage%2Fwebp)  
+![pic5](https://user-images.githubusercontent.com/72702419/141101108-4bc3c83c-5d1d-4446-9627-cd101d230fdb.png)
 
 В «Доске задач» пользователь может записывать задачи, связанные с выбранным предметом. Для создания новой задачи нужно нажать на кнопку «+» [1]. При создании задачи можно выбрать дату выполнения, тогда в карточке созданной задачи будет присутствовать шапочка с датой выполнения [2]. После выполнении задачи пользователь может нажать на пользователь может нажать на галочку внизу карточки задачи [3]. Все выполненные задачи хранятся в «Истории задач» [4].  
 
-![проводник](https://keep.google.com/u/0/media/v2/1W_WeDpM3F-BkTlhFA81xyEs_VOZ2Ox_3BlNWXgFOJhd9uOe25EP9j2BV5lPXC4I/1jOhR1z2uiG-koIXHDWN_FZEJZYV_7U3mqJmAHecJWnDNXBQXQt9tu5Ji_3zkhd0?sz=512&accept=image%2Fgif%2Cimage%2Fjpeg%2Cimage%2Fjpg%2Cimage%2Fpng%2Cimage%2Fwebp)  
+![pic6](https://user-images.githubusercontent.com/72702419/141101133-ad7af46b-f6b1-481c-81b3-78a1db35a454.png)
 
 В «Проводнике» пользователь может добавлять файлы и ссылки, связанные с выбранным предметом. Для добавления файла/ссылки нужно нажать на кнопку «+» [1]. При добавлении файла/ссылки нужно указать либо расположение файла на компьютере, либо ссылку на какую-либо Интернет-страницу. В карточке файла отображается формат файла с иконкой [2]. Также в карточке файла есть кнопка для перехода в Проводник и открытия папки, в которой находится файл [3]. Файл/ссылку можно удалить — для этого нужно нажать на крестик внизу карточки файла/ссылки [4]. Все удаленные файлы/ссылки хранятся в «Архиве» [5].  
 
