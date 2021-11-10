@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/contentModel.xml
+/modules.xml
+/.idea.Scheduler1.iml
+# Datasource local storage ignored files
+/../../../../../../../../../../:\Users\aesok\OneDrive\Рабочий стол\oop\Scheduler1\.idea\.idea.Scheduler1.dir\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
