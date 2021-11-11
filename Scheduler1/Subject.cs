@@ -4,21 +4,19 @@ using System.Windows.Forms;
 
 namespace Scheduler1
 {
-    public class Subject
-    
+    public sealed class Subject
     {
         public string Name;
-        public Panel Panel;
         public Image Icon;
         public Color Color;
         public List<Task> Tasks;
         public List<Document> Documents;
+        public Button ButtonToThisSubject;
 
-        public Subject(string name, Panel panel, string iconPath, Color color, List<Task> tasks, 
+        public Subject(string name, string iconPath, Color color, List<Task> tasks,
             List<Document> documents)
         {
             Name = name;
-            Panel = panel;
             Icon = Image.FromFile(Files.GetPathTo(iconPath));
             Color = color;
             Tasks = tasks;

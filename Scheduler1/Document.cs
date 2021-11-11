@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace Scheduler1
 {
+    /// <summary>
+    /// Будущие документы, лежащие в предмете
+    /// </summary>
     public class Document
     {
         public Image Icon;
