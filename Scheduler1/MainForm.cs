@@ -18,16 +18,7 @@ namespace Scheduler1
 
             GenerateSubjectsPages();
 
-            var tableLayoutPanel = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                VerticalScroll = {Maximum = 0},
-                AutoScroll = true
-            };
-            foreach (var b in GetButtons())
-                tableLayoutPanel.Controls.Add(b);
-
-            GenerateMainPage(tableLayoutPanel);
+            GenerateMainPage();
 
             GenerateSettingsPage();
 
@@ -59,8 +50,17 @@ namespace Scheduler1
             settingsPage.Header.BackButton.Click += OpenPreviousPage;
         }
 
-        private void GenerateMainPage(Control tableLayoutPanel)
+        private void GenerateMainPage()
         {
+            var tableLayoutPanel = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                VerticalScroll = {Maximum = 0},
+                AutoScroll = true
+            };
+            foreach (var b in GetButtons())
+                tableLayoutPanel.Controls.Add(b);
+            
             mainPage = new Page(new Header(ClientSize,
                 Globals.MenuElement), tableLayoutPanel);
             mainPage.Panel.GeneratePage(Controls);
