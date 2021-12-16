@@ -20,7 +20,8 @@ namespace Scheduler1
             Filling = filling;
             Subject = subject;
             Panel = new Panel {Dock = DockStyle.Fill};
-            Panel.Controls.Add(Filling!);
+            if (filling != null) 
+                Panel.Controls.Add(Filling);
             Panel.Controls.Add(Header.Label);
         }
     }

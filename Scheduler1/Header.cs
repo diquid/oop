@@ -23,13 +23,13 @@ namespace Scheduler1
         public readonly Button BackButton;
         public readonly Button SettingsButton;
 
-        public Header(Size clientSize, Color color)
+        public Header(Color color)
         {
             Color = color;
             Label = new Label
             {
                 Dock = DockStyle.Top,
-                Size = new Size(clientSize.Width, Globals.MainSize),
+                Size = new Size(10, Globals.MainSize),
                 BackColor = Color,
                 Font = Globals.HeaderBarFont,
                 ForeColor = Globals.FontLight,
