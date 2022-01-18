@@ -14,19 +14,47 @@ namespace Scheduler1
         public readonly FlowLayoutPanel LayoutPanel;
         public readonly Panel Panel;
 
-        public Field(string name, IEnumerable<IElement> elements)
+        public Field(string name, IEnumerable<IElement> elements, Control control)
         {
+            Parent = control;
             var builtElements = elements
                 .Select(e => e.Build(150))
                 .ToList();
+            
+            var historyBtn = new Button 
+            {
+                Dock = DockStyle.Right,
+                Size = new Size(Globals.MainSize, Globals.MainSize),
+                BackColor = Globals.MenuElement,
+                BackgroundImage = Image.FromFile(
+                    Files.GetPathTo(@"Icons\history.png")),
+                BackgroundImageLayout = ImageLayout.Stretch,
+                FlatStyle = FlatStyle.Flat,
+                FlatAppearance = {BorderSize = 0}
+            };
+            var deleteBtn = new Button 
+            {
+                Dock = DockStyle.Right,
+                Size = new Size(Globals.MainSize, Globals.MainSize),
+                BackColor = Globals.MenuElement,
+                BackgroundImage = Image.FromFile(
+                    Files.GetPathTo(@"Icons\can.png")),
+                BackgroundImageLayout = ImageLayout.Stretch,
+                FlatStyle = FlatStyle.Flat,
+                FlatAppearance = {BorderSize = 0}
+            };
+            deleteBtn.Click += RemoveField;
+
             Panel = new Panel
             {
                 BackColor = Color.Brown,
+                Height = 700,
                 Dock = DockStyle.Top,
-                Margin = new Padding(20, 20, 20, 20),
+                Margin = new Padding(20),
                 AutoSize = true,
                 AutoSizeMode = AutoSizeMode.GrowAndShrink,
             };
+            
             Label = new Label
             {
                 Text = name,
@@ -37,6 +65,9 @@ namespace Scheduler1
                 ForeColor = Globals.FontLight,
                 TextAlign = ContentAlignment.MiddleLeft,
             };
+            Label.Controls.Add(historyBtn);
+            Label.Controls.Add(deleteBtn);
+            
             LayoutPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -52,6 +83,11 @@ namespace Scheduler1
 
             Panel.Controls.Add(LayoutPanel);
             Panel.Controls.Add(Label);
+        }
+
+        private void RemoveField(object sender, EventArgs eventArgs)
+        {
+            Parent.Controls.Remove(Panel);
         }
     }
 }

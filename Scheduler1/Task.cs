@@ -52,7 +52,7 @@ namespace Scheduler1
 
         private void ChangeColor(Control field)
         {
-            var colors = new[] {Color.GreenYellow, Color.Red};
+            var colors = new[] {Color.GreenYellow, Color.Khaki};
             field.BackColor = field.BackColor == colors[0] ? colors[1] : colors[0];
         }
     }

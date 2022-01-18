@@ -34,15 +34,17 @@ namespace Scheduler1
         {
             foreach (var subject in GetSubjects())
             {
-                var tableLayoutPanel = new TableLayoutPanel()
+                var tableLayoutPanel = new TableLayoutPanel
                 {
                     Dock = DockStyle.Fill,
                     VerticalScroll = {Maximum = 0},
                     AutoScroll = true
                 };
-                for (var i = 0; i < 5; i++)
+                
+                for (var i = 0; i < 2; i++)
                     tableLayoutPanel.Controls.Add(
-                        new Field("Tasks", subject.Tasks).Panel);
+                        new Field("Tasks", subject.Tasks, tableLayoutPanel)
+                            .Panel);
 
                 var subjectPage = new Page(new Header(subject.Color),
                     tableLayoutPanel, subject);
@@ -61,6 +63,7 @@ namespace Scheduler1
             addSubjectPage.Panel.GeneratePage(Controls);
             addSubjectPage.Header.Label.Text = @"Add Subject";
             addSubjectPage.Header.BackButton.Click += OpenPreviousPage;
+            addSubjectPage.Header.AddButton.Visible = false;
             addSubjectPage.Header.SettingsButton.Click += (sender, e) =>
                 OpenPage(settingsPage, addSubjectPage);
         }
@@ -71,6 +74,7 @@ namespace Scheduler1
             settingsPage.Panel.GeneratePage(Controls);
             settingsPage.Header.Label.Text = @"Settings";
             settingsPage.Header.SettingsButton.Visible = false;
+            settingsPage.Header.AddButton.Visible = false;
             settingsPage.Header.BackButton.Click += OpenPreviousPage;
         }
 
@@ -90,6 +94,7 @@ namespace Scheduler1
             mainPage.Panel.GeneratePage(Controls);
             mainPage.Header.Label.Text = @"Study Structurizer";
             mainPage.Header.BackButton.Visible = false;
+            mainPage.Header.AddButton.Visible = false;
             mainPage.Header.SettingsButton.Click += (sender, e) =>
                 OpenPage(settingsPage, mainPage);
         }
@@ -121,7 +126,7 @@ namespace Scheduler1
             {
                 var random = rnd.Next(2);
                 var colors = new[] {Globals.Button1, Globals.Button2};
-                subjects.Add(new Subject("Алгебра и геометрия",
+                subjects.Add(new Subject($"Алгебра и геометрия {i}",
                     @"Icons\4.png", colors[random], new List<Task>
                     {
                         new Task(DateTime.Now, false, "Task1"),
@@ -129,7 +134,6 @@ namespace Scheduler1
                         new Task(DateTime.Now, false, "Task1"),
                         new Task(DateTime.Today, false, "Task2"),
                         new Task(DateTime.Now, false, "Task1"),
-                        new Task(DateTime.Today, false, "Task2"),
                     }, new List<Document>
                     {
                         new Document(@"Icons\3.png", "DocumentTestFile.txt", "Doc1"),

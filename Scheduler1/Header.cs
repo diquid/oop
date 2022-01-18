@@ -22,6 +22,7 @@ namespace Scheduler1
         public readonly Label Label;
         public readonly Button BackButton;
         public readonly Button SettingsButton;
+        public readonly Button AddButton;
 
         public Header(Color color)
         {
@@ -58,7 +59,19 @@ namespace Scheduler1
                 FlatStyle = FlatStyle.Flat,
                 FlatAppearance = {BorderSize = 0}
             };
+            AddButton = new Button
+            {
+                Dock = DockStyle.Right,
+                Size = new Size(Globals.MainSize, Globals.MainSize),
+                BackColor = Color,
+                BackgroundImage = Image.FromFile(
+                    Files.GetPathTo(@"Icons\add.png")),
+                BackgroundImageLayout = ImageLayout.Stretch,
+                FlatStyle = FlatStyle.Flat,
+                FlatAppearance = {BorderSize = 0}
+            };
 
+            Label.Controls.Add(AddButton);
             Label.Controls.Add(SettingsButton);
             Label.Controls.Add(BackButton);
         }
