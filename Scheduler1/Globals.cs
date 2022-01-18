@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Scheduler1
 {
@@ -36,5 +37,17 @@ namespace Scheduler1
             new Font("Gotham Pro Medium", 17);
 
         public static readonly int MainSize = 50;
+        
+        public static readonly Button Button = new Button 
+        {
+            Dock = DockStyle.Right,
+            Size = new Size(MainSize, MainSize),
+            BackColor = MenuElement,
+            BackgroundImage = Image.FromFile(
+                Files.GetPathTo(@"Icons\can.png")),
+            BackgroundImageLayout = ImageLayout.Stretch,
+            FlatStyle = FlatStyle.Flat,
+            FlatAppearance = {BorderSize = 0}
+        };
     }
 }

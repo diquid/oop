@@ -1,79 +1,50 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using ContentAlignment = System.Drawing.ContentAlignment;
 
 namespace Scheduler1
 {
-    //
-    // Прошу прощения, есть некая неудобная вещь. Для невероятно красивого дизайна
-    // Header (это лейбл с кнопкой назад и настройки вверху окна) пришлось прикрепить
-    // кнопки к лейблу на правой и левой стороне, что как бы делает кнопки зависимыми
-    // от этого лейбла (надеюсь понятно) и возникает абсолютно не очевидная (не сарказм)
-    // строка кода 'controls.Add(page.Header.Label);' в Page.cs. Если будут идеи как
-    // заменить эту строку на 'controls.Add(page.Header);', будет отлично.
-    //
-    /// <summary>
-    /// Заголовок с кнопками назад и настроек
-    /// </summary>
-    public class Header : Control
+    public sealed class Header : Control
     {
-        public readonly Color Color;
-        public readonly Label Label;
         public readonly Button BackButton;
         public readonly Button SettingsButton;
         public readonly Button AddButton;
+        public readonly Label Label;
 
-        public Header(Color color)
+        public Header(string text, Color color)
         {
-            Color = color;
-            Label = new Label
+            Height = 50;
+            Dock = DockStyle.Top;
+            BackColor = color;
+            SettingsButton = new PatternMenuButton(color)
             {
-                Dock = DockStyle.Top,
-                Size = new Size(10, Globals.MainSize),
-                BackColor = Color,
-                Font = Globals.HeaderBarFont,
-                ForeColor = Globals.FontLight,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(Globals.MainSize, 0, 0, 0)
+                Dock = DockStyle.Right,
+                BackgroundImage = Image.FromFile(
+                    Files.GetPathTo(@"Icons\1.png"))
             };
-            BackButton = new Button
+            BackButton = new PatternMenuButton(color)
             {
                 Dock = DockStyle.Left,
-                Size = new Size(Globals.MainSize, Globals.MainSize),
-                BackColor = Color,
                 BackgroundImage = Image.FromFile(
-                    Files.GetPathTo(@"Icons\6.png")),
-                BackgroundImageLayout = ImageLayout.Stretch,
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = {BorderSize = 0}
+                    Files.GetPathTo(@"Icons\6.png"))
             };
-            SettingsButton = new Button
+            Label = new Label
+            {
+                Text = text,
+                Dock = DockStyle.Left,
+                AutoSize = true,
+                Font = Globals.HeaderBarFont,
+                ForeColor = Globals.FontLight
+            };
+            AddButton = new PatternMenuButton(color)
             {
                 Dock = DockStyle.Right,
-                Size = new Size(Globals.MainSize, Globals.MainSize),
-                BackColor = Color,
                 BackgroundImage = Image.FromFile(
-                    Files.GetPathTo(@"Icons\1.png")),
-                BackgroundImageLayout = ImageLayout.Stretch,
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = {BorderSize = 0}
+                    Files.GetPathTo(@"Icons\add.png"))
             };
-            AddButton = new Button
-            {
-                Dock = DockStyle.Right,
-                Size = new Size(Globals.MainSize, Globals.MainSize),
-                BackColor = Color,
-                BackgroundImage = Image.FromFile(
-                    Files.GetPathTo(@"Icons\add.png")),
-                BackgroundImageLayout = ImageLayout.Stretch,
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = {BorderSize = 0}
-            };
-
-            Label.Controls.Add(AddButton);
-            Label.Controls.Add(SettingsButton);
-            Label.Controls.Add(BackButton);
+            Controls.Add(Label);
+            Controls.Add(BackButton);
+            Controls.Add(AddButton);
+            Controls.Add(SettingsButton);
         }
     }
 }

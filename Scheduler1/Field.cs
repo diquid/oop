@@ -25,7 +25,7 @@ namespace Scheduler1
             {
                 Dock = DockStyle.Right,
                 Size = new Size(Globals.MainSize, Globals.MainSize),
-                BackColor = Globals.MenuElement,
+                BackColor = Parent.BackColor,
                 BackgroundImage = Image.FromFile(
                     Files.GetPathTo(@"Icons\history.png")),
                 BackgroundImageLayout = ImageLayout.Stretch,
@@ -36,7 +36,7 @@ namespace Scheduler1
             {
                 Dock = DockStyle.Right,
                 Size = new Size(Globals.MainSize, Globals.MainSize),
-                BackColor = Globals.MenuElement,
+                BackColor = Parent.BackColor,
                 BackgroundImage = Image.FromFile(
                     Files.GetPathTo(@"Icons\can.png")),
                 BackgroundImageLayout = ImageLayout.Stretch,

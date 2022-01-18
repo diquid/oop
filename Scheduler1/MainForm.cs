@@ -20,21 +20,60 @@ namespace Scheduler1
             InitializeForm();
 
             GenerateSubjectsPages();
-
+            
             GenerateAddSubjectPage();
-
+            
             GenerateMainPage();
-
+            
             GenerateSettingsPage();
+            
+            mainPage.BringToFront();
+        }
 
-            mainPage.Panel.BringToFront();
+        private void GenerateMainPage()
+        {
+            var header = new Header(@"Study Structurizer", Globals.MenuElement);
+            var layoutPanel = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                VerticalScroll = {Maximum = 0},
+                AutoScroll = true
+            };
+            foreach (var b in GetButtons())
+                layoutPanel.Controls.Add(b);
+            
+            var page = new Page(header, layoutPanel);
+            Controls.Add(page);
+
+            page.Header.BackButton.Visible = false;
+            page.Header.AddButton.Visible = false;
+            
+            page.Header.SettingsButton.Click += (sender, e) => 
+                OpenPage(settingsPage, mainPage);
+
+            mainPage = page;
+        }
+        
+        private void GenerateSettingsPage()
+        {
+            var header = new Header(@"Settings", Globals.MenuElement);
+
+            var page = new Page(header, new Control());
+            Controls.Add(page);
+
+            page.Header.SettingsButton.Visible = false;
+            page.Header.AddButton.Visible = false;
+            
+            page.Header.BackButton.Click += OpenPreviousPage;
+
+            settingsPage = page;
         }
 
         private void GenerateSubjectsPages()
         {
             foreach (var subject in GetSubjects())
             {
-                var tableLayoutPanel = new TableLayoutPanel
+                var layoutPanel = new TableLayoutPanel
                 {
                     Dock = DockStyle.Fill,
                     VerticalScroll = {Maximum = 0},
@@ -42,61 +81,34 @@ namespace Scheduler1
                 };
                 
                 for (var i = 0; i < 2; i++)
-                    tableLayoutPanel.Controls.Add(
-                        new Field("Tasks", subject.Tasks, tableLayoutPanel)
-                            .Panel);
-
-                var subjectPage = new Page(new Header(subject.Color),
-                    tableLayoutPanel, subject);
-                subjectPage.Panel.GeneratePage(Controls);
-                subjectPage.Header.Label.Text = subject.Name;
-                subjectPage.Header.SettingsButton.Click += (sender, e) =>
-                    OpenPage(settingsPage, subjectPage);
-                subjectPage.Header.BackButton.Click += OpenPreviousPage;
-                subjectsPages.Add(subjectPage);
+                    layoutPanel.Controls.Add(new Field("Tasks", 
+                            subject.Tasks, layoutPanel).Panel);
+        
+                var header = new Header(subject.Name, subject.Color);
+                var page = new Page(header, layoutPanel, subject);
+                Controls.Add(page);
+                
+                page.Header.BackButton.Click += OpenPreviousPage;
+                page.Header.SettingsButton.Click += (sender, e) =>
+                    OpenPage(settingsPage, page);
+                
+                subjectsPages.Add(page);
             }
         }
-
+        
         private void GenerateAddSubjectPage()
         {
-            addSubjectPage = new Page(new Header(Globals.MenuElement));
-            addSubjectPage.Panel.GeneratePage(Controls);
-            addSubjectPage.Header.Label.Text = @"Add Subject";
-            addSubjectPage.Header.BackButton.Click += OpenPreviousPage;
-            addSubjectPage.Header.AddButton.Visible = false;
-            addSubjectPage.Header.SettingsButton.Click += (sender, e) =>
-                OpenPage(settingsPage, addSubjectPage);
-        }
-
-        private void GenerateSettingsPage()
-        {
-            settingsPage = new Page(new Header(Globals.MenuElement));
-            settingsPage.Panel.GeneratePage(Controls);
-            settingsPage.Header.Label.Text = @"Settings";
-            settingsPage.Header.SettingsButton.Visible = false;
-            settingsPage.Header.AddButton.Visible = false;
-            settingsPage.Header.BackButton.Click += OpenPreviousPage;
-        }
-
-        private void GenerateMainPage()
-        {
-            var tableLayoutPanel = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                VerticalScroll = {Maximum = 0},
-                AutoScroll = true
-            };
-            foreach (var b in GetButtons())
-                tableLayoutPanel.Controls.Add(b);
+            var header = new Header(@"Add Subject", Globals.MenuElement);
+            var page = new Page(header, new Control());
+            Controls.Add(page);
             
-            mainPage = new Page(new Header(Globals.MenuElement), 
-                tableLayoutPanel);
-            mainPage.Panel.GeneratePage(Controls);
-            mainPage.Header.Label.Text = @"Study Structurizer";
-            mainPage.Header.BackButton.Visible = false;
-            mainPage.Header.AddButton.Visible = false;
-            mainPage.Header.SettingsButton.Click += (sender, e) =>
-                OpenPage(settingsPage, mainPage);
+            page.Header.AddButton.Visible = false;
+            
+            page.Header.BackButton.Click += OpenPreviousPage;
+            page.Header.SettingsButton.Click += (sender, e) =>
+                OpenPage(settingsPage, addSubjectPage);
+            
+            addSubjectPage = page;
         }
 
         private void InitializeForm()
@@ -109,20 +121,20 @@ namespace Scheduler1
 
         private void OpenPreviousPage(object sender, EventArgs eventArgs)
         {
-            pagesHistory.Pop().Panel.BringToFront();
+            pagesHistory.Pop().BringToFront();
         }
-
-        public void OpenPage(Page pageToOpen, Page previousPage)
+        
+        private void OpenPage(Page pageToOpen, Page previousPage)
         {
             pagesHistory.Push(previousPage);
-            pageToOpen.Panel.BringToFront();
+            pageToOpen.BringToFront();
         }
-
+        
         private static List<Subject> GetSubjects()
         {
             var rnd = new Random();
             var subjects = new List<Subject>();
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 2; i++)
             {
                 var random = rnd.Next(2);
                 var colors = new[] {Globals.Button1, Globals.Button2};
@@ -140,46 +152,24 @@ namespace Scheduler1
                         new Document(@"Icons\1.png", "DocumentTestFile.txt", "Doc2")
                     }));
             }
-
+        
             return subjects;
         }
-
+        
         private List<Button> GetButtons()
         {
             var buttons = new List<Button>();
             foreach (var subjectPage in subjectsPages)
             {
-                var button = new Button
-                {
-                    Size = new Size(ClientSize.Width / 16 * 10,
-                        Globals.MainSize * 2),
-                    FlatStyle = FlatStyle.Flat,
-                    Text = subjectPage.Subject.Name,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Bottom,
-                    BackColor = subjectPage.Subject.Color,
-                    Font = Globals.ButtonFont,
-                    ForeColor = Globals.FontLight,
-                    Margin = new Padding(0, 15, 0, 15),
-                    FlatAppearance = {BorderSize = 0}
-                };
+                var button = new PatternSubjectButton(subjectPage.Subject.Name,
+                    subjectPage.Subject.Color, ClientSize.Width / 2);
                 button.Click += (sender, eventsArg) =>
                     OpenPage(subjectPage, mainPage);
                 buttons.Add(button);
             }
             
-            var addSubjectButton = new Button
-            {
-                FlatStyle = FlatStyle.Flat,
-                Text = "+",
-                Size = new Size(ClientSize.Width / 16 * 10,
-                    Globals.MainSize * 2),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom,
-                BackColor = Globals.MenuElement,
-                Font = Globals.ButtonFont,
-                ForeColor = Globals.FontLight,
-                Margin = new Padding(0, 15, 0, 15),
-                FlatAppearance = {BorderSize = 0}
-            };
+            var addSubjectButton = new PatternSubjectButton("+",
+                Globals.MenuElement, ClientSize.Width / 2);
             addSubjectButton.Click += (sender, eventsArg) =>
                 OpenPage(addSubjectPage, mainPage);
             buttons.Add(addSubjectButton);
