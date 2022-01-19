@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Scheduler1
@@ -29,8 +30,7 @@ namespace Scheduler1
             {
                 new Label
                 {
-                    Text = "ljfnawefonwonfpawoenf pfnwaebf lihbawe ifhbawne iounfawl" +
-                           ";f ",
+                    Text = RandomString(50),
                     Dock = DockStyle.Fill,
                 },
                 new Label
@@ -48,6 +48,14 @@ namespace Scheduler1
             }
             
             return field;
+        }
+        
+        public static string RandomString(int length)
+        {
+            var random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         private void ChangeColor(Control field)

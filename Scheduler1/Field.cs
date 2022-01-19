@@ -8,11 +8,10 @@ using ContentAlignment = System.Drawing.ContentAlignment;
 
 namespace Scheduler1
 {
-    public class Field : Control
+    public sealed class Field : Control
     {
-        public readonly Label Label;
+        public readonly Header Header;
         public readonly FlowLayoutPanel LayoutPanel;
-        public readonly Panel Panel;
 
         public Field(string name, IEnumerable<IElement> elements, Control control)
         {
@@ -20,53 +19,21 @@ namespace Scheduler1
             var builtElements = elements
                 .Select(e => e.Build(150))
                 .ToList();
-            
-            var historyBtn = new Button 
-            {
-                Dock = DockStyle.Right,
-                Size = new Size(Globals.MainSize, Globals.MainSize),
-                BackColor = Parent.BackColor,
-                BackgroundImage = Image.FromFile(
-                    Files.GetPathTo(@"Icons\history.png")),
-                BackgroundImageLayout = ImageLayout.Stretch,
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = {BorderSize = 0}
-            };
-            var deleteBtn = new Button 
-            {
-                Dock = DockStyle.Right,
-                Size = new Size(Globals.MainSize, Globals.MainSize),
-                BackColor = Parent.BackColor,
-                BackgroundImage = Image.FromFile(
-                    Files.GetPathTo(@"Icons\can.png")),
-                BackgroundImageLayout = ImageLayout.Stretch,
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = {BorderSize = 0}
-            };
-            deleteBtn.Click += RemoveField;
 
-            Panel = new Panel
-            {
-                BackColor = Color.Brown,
-                Height = 700,
-                Dock = DockStyle.Top,
-                Margin = new Padding(20),
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink,
-            };
+            BackColor = Color.Brown;
+            Dock = DockStyle.Top;
+            Height = 200;
+            Margin = new Padding(20);
+            AutoSize = true;
+
+            var header = new Header(name, Globals.MenuElement, 
+                new List<ElementsTypes>
+                {
+                    ElementsTypes.HistoryBtn,
+                    ElementsTypes.DeleteBtn
+                });
             
-            Label = new Label
-            {
-                Text = name,
-                Dock = DockStyle.Top,
-                Size = new Size(100, 50),
-                BackColor = Globals.MenuElement,
-                Font = Globals.HeaderBarFont,
-                ForeColor = Globals.FontLight,
-                TextAlign = ContentAlignment.MiddleLeft,
-            };
-            Label.Controls.Add(historyBtn);
-            Label.Controls.Add(deleteBtn);
+            header.Elements[ElementsTypes.DeleteBtn].Click += RemoveField;
             
             LayoutPanel = new FlowLayoutPanel
             {
@@ -81,13 +48,15 @@ namespace Scheduler1
             foreach (var e in builtElements) 
                 LayoutPanel.Controls.Add(e);
 
-            Panel.Controls.Add(LayoutPanel);
-            Panel.Controls.Add(Label);
+            Controls.Add(LayoutPanel);
+            Controls.Add(header);
+
+            Header = header;
         }
 
         private void RemoveField(object sender, EventArgs eventArgs)
         {
-            Parent.Controls.Remove(Panel);
+            Parent.Controls.Remove(this);
         }
     }
 }

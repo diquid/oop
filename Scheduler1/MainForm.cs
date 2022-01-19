@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace Scheduler1
 {
@@ -32,7 +30,12 @@ namespace Scheduler1
 
         private void GenerateMainPage()
         {
-            var header = new Header(@"Study Structurizer", Globals.MenuElement);
+            var header = new Header(@"Study Structurizer", Globals.MenuElement,
+                new List<ElementsTypes>
+                {
+                    ElementsTypes.SettingsBtn,
+                    ElementsTypes.Label
+                });
             var layoutPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -45,27 +48,27 @@ namespace Scheduler1
             var page = new Page(header, layoutPanel);
             Controls.Add(page);
 
-            page.Header.BackButton.Visible = false;
-            page.Header.AddButton.Visible = false;
-            
-            page.Header.SettingsButton.Click += (sender, e) => 
-                OpenPage(settingsPage, mainPage);
+            page.Header.Elements[ElementsTypes.SettingsBtn].Click += 
+                (sender, e) => 
+                    OpenPage(settingsPage, page);
 
             mainPage = page;
         }
         
         private void GenerateSettingsPage()
         {
-            var header = new Header(@"Settings", Globals.MenuElement);
-
+            var header = new Header(@"Settings", Globals.MenuElement,
+                new List<ElementsTypes>
+                {
+                    ElementsTypes.Label,
+                    ElementsTypes.BackBtn
+                });
+        
             var page = new Page(header, new Control());
             Controls.Add(page);
 
-            page.Header.SettingsButton.Visible = false;
-            page.Header.AddButton.Visible = false;
-            
-            page.Header.BackButton.Click += OpenPreviousPage;
-
+            page.Header.Elements[ElementsTypes.BackBtn].Click += OpenPreviousPage;
+        
             settingsPage = page;
         }
 
@@ -82,14 +85,22 @@ namespace Scheduler1
                 
                 for (var i = 0; i < 2; i++)
                     layoutPanel.Controls.Add(new Field("Tasks", 
-                            subject.Tasks, layoutPanel).Panel);
+                            subject.Tasks, layoutPanel));
         
-                var header = new Header(subject.Name, subject.Color);
+                var header = new Header(subject.Name, subject.Color,
+                    new List<ElementsTypes>
+                    {
+                        ElementsTypes.Label,
+                        ElementsTypes.BackBtn,
+                        ElementsTypes.AddBtn,
+                        ElementsTypes.SettingsBtn
+                    });
                 var page = new Page(header, layoutPanel, subject);
                 Controls.Add(page);
                 
-                page.Header.BackButton.Click += OpenPreviousPage;
-                page.Header.SettingsButton.Click += (sender, e) =>
+                page.Header.Elements[ElementsTypes.BackBtn].Click += OpenPreviousPage;
+                page.Header.Elements[ElementsTypes.SettingsBtn].Click += 
+                    (sender, e) =>
                     OpenPage(settingsPage, page);
                 
                 subjectsPages.Add(page);
@@ -98,15 +109,20 @@ namespace Scheduler1
         
         private void GenerateAddSubjectPage()
         {
-            var header = new Header(@"Add Subject", Globals.MenuElement);
+            var header = new Header(@"Add Subject", Globals.MenuElement,
+                new List<ElementsTypes>
+                {
+                    ElementsTypes.Label,
+                    ElementsTypes.BackBtn,
+                    ElementsTypes.SettingsBtn
+                });
             var page = new Page(header, new Control());
             Controls.Add(page);
-            
-            page.Header.AddButton.Visible = false;
-            
-            page.Header.BackButton.Click += OpenPreviousPage;
-            page.Header.SettingsButton.Click += (sender, e) =>
-                OpenPage(settingsPage, addSubjectPage);
+
+            page.Header.Elements[ElementsTypes.BackBtn].Click += OpenPreviousPage;
+            page.Header.Elements[ElementsTypes.SettingsBtn].Click += 
+                (sender, e) =>
+                OpenPage(settingsPage, page);
             
             addSubjectPage = page;
         }

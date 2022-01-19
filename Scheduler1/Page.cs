@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Scheduler1
@@ -18,6 +17,11 @@ namespace Scheduler1
             Dock = DockStyle.Fill;
             Controls.Add(Filling);
             Controls.Add(Header);
+        }
+        
+        private void RemovePage(object sender, EventArgs eventArgs)
+        {
+            Parent.Controls.Remove(this);
         }
     }
 }
